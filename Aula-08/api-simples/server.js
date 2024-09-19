@@ -5,6 +5,9 @@ const express = require('express')
 const app = express()
 //define a porta que ira rodar 
 const porta = 3000
+//Lista dados para armazenar todos os dados cadastrados
+const dados =[]
+
 
 //midleware para processar a resposta com o formato json
 app.use(express.json())
@@ -16,9 +19,10 @@ app.get('/',(req,res)=>{
     res.send('Api funcionando')
 });
 app.post('/data',(req,res)=>{
-    
+    //parse para oenvio de dados
     const {nome,idade} = req.body;
-    res.send(`Nome ${nome} Idade ${idade}`);
+    res.send(`Nome: ${nome} Idade: ${idade} anos , dados cadastrados com sucesso`);
+    dados.push({nome,idade})//adiciona a lista
 
 
 });
@@ -26,7 +30,8 @@ app.post('/data',(req,res)=>{
 app.get('/data',(req,res)=>{
     //parse para leitura do codigo
     const {nome,idade} = req.body
-    res.send(`Nome ${nome} Idade ${idade}`)
+    //res.send(`Nome ${nome} Idade ${idade}`)
+    res.json(dados) // armazena a resposta
 })
 
 //inicia o servidor e a porta
